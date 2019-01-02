@@ -1,0 +1,30 @@
+<h1 class="newspaper-font">Business</h1>
+<div class="d-flex intro-bar">
+  <p class="p-2 flex-grow-1">Welcome to {{title}} <span id="datetime"></span></p>
+  <div class="p-2">
+
+    <button id="scrape-articles" type="button" class="btn btn-outline-dark"><i class="fas fa-glasses"></i> Scrape New
+      Articles</button>
+  </div>
+</div>
+<div class="content-bar">
+  {{# each articles }}
+  <div class="row">
+    {{# each this}}
+    <div class="col-sm-6 col-md-4">
+      <div class="card mx-auto mb-3" style="width: 18.5rem;">
+        <img class="card-img-top img-fluid" src="{{this.imagePath}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <a href="{{this.link}}" class="card-title">{{this.title}}</a>
+          <p class="card-text">{{this.description}}</p>
+
+          <button type="button" class="view-comments btn btn-link"><i class="far fa-comments"></i> View Comments</button>
+          <a href="/save-article/{{this._id}}" class="btn btn-success">Save <i class="far fa-bookmark"></i></a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div> {{!-- End Content Bar --}}

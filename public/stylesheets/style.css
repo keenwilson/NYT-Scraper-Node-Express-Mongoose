@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Alfa+Slab+One|Buenard:700|Open+Sans");
+
+body {
+  font: 14px "Open Sans", Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.newspaper-font {
+  font-family: "Alfa Slab One", cursive;
+}
+
+.card-title {
+  font-family: "Buenard", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.view-comments {
+  color: #333;
+}
+
+.content-body {
+  font: 14px "Open Sans", Helvetica, Arial, sans-serif;
+  padding: 20px 50px;
+}
+
+.intro-bar {
+  display: flex;
+  flex-direction: row;
+  border-top: 2px solid rgb(0, 0, 0);
+  padding: 15px 0px 12px;
+  width: 100%;
+}
+
+.content-bar {
+  border-top: 1px solid #000;
+  padding-top: 29px;
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+a {
+  color: #333;
+}
