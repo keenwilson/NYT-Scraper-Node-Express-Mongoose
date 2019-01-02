@@ -11,8 +11,15 @@ a.newspaper-headline {
 .newspaper-font {
   font-family: "Alfa Slab One", cursive;
 }
-
-.card-title {
+.content-title {
+  font-family: "Buenard", serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.intro-text {
+  font-size: 1rem;
+}
+.news-title {
   font-family: "Buenard", serif;
   font-weight: 700;
   font-size: 1.5rem;

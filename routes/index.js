@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Article = require("../models/article");
+var Comment = require("../models/comment");
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -245,4 +246,104 @@ router.get("/entrepreneuship", function(req, res) {
       res.redirect("/");
     });
 });
+
+// Route for grabbing a specific Article by id, populate it with it's note
+router.get("/articles/:id", function(req, res) {
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  Article.findOne({ _id: req.params.id })
+    // ..and populate all of the comments associated with it
+    .populate("comments")
+    .then(function(dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      console.log(
+        "Successfully find and associate an Article with the given id",
+        dbArticle
+      );
+
+      // If there are comments in the article
+      var commentsToDisplay = [];
+
+      if (dbArticle.comments === undefined || dbArticle.comments.length == 0) {
+        commentsToDisplay = [
+          {
+            commentBody: "Your are the first person to comment.",
+            username: "N/A"
+          }
+        ];
+      } else {
+        commentsToDisplay = dbArticle.comments;
+      }
+      console.log(
+        "-------------------------------------commentsToDisplay",
+        commentsToDisplay
+      );
+      res.render("article/index", {
+        articleId: dbArticle._id,
+        imagePath: dbArticle.imagePath,
+        title: dbArticle.title,
+        description: dbArticle.description,
+        section: dbArticle.section,
+        link: dbArticle.link,
+        comments: commentsToDisplay,
+        date: dbArticle.date,
+        isSaved: dbArticle.isSaved,
+        buttonStatus: dbArticle.buttonStatus
+      });
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+
+// Route for saving/updating an Article's associated Comment
+router.post("/articles/:id", function(req, res) {
+  console.log("Submit comment is clicked", req.params);
+
+  // Grab the request body
+  var body = req.body;
+  // Each property on the body all represent our text boxes in article/index.hbs as specified by the name attribute on each of those input fields
+  var res_body = {
+    commentBody: body.new_comment_body,
+    username: body.new_comment_username
+  };
+
+  // Create a new note and pass the req.body to the entry
+  Comment.create(res_body)
+    .then(function(dbComment) {
+      console.log("---------------------------");
+      console.log("find one Article with an `_id` equal to ", req.params.id);
+      // If a Comment was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+      // { new: true } tells the query that we want it to return the updated Article -- it returns the original by default
+      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+      return Article.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { comments: dbComment._id } },
+        { new: true }
+      );
+    })
+    .then(function(dbArticle) {
+      // If we were able to successfully update an Article, send it back to the client
+      console.log("Successfully update an Article", dbArticle);
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// Route for retrieving all Notes from the db
+router.get("/comments", function(req, res) {
+  // Find all Comments
+  Comment.find({})
+    .then(function(dbComment) {
+      // If all Notes are successfully found, send them back to the client
+      res.json(dbComment);
+    })
+    .catch(function(err) {
+      // If an error occurs, send the error back to the client
+      res.json(err);
+    });
+});
+
 module.exports = router;

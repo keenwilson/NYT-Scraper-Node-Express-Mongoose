@@ -2,9 +2,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-  user: { type: String, required: true },
-  body: { type: String, required: true },
-  isLiked: { type: Boolean, default: false },
+  username: { type: String, required: true },
+  commentBody: { type: String, required: true },
+  totalLikes: { type: Number, default: 0 },
   date: { type: Date, default: Date.now }
 });
 
