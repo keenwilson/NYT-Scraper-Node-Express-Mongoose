@@ -7,6 +7,7 @@ var schema = new Schema({
   description: { type: String, default: "No Description Available" },
   link: { type: String, required: true },
   isSaved: { type: Boolean, default: false },
+  buttonStatus: { type: String, default: " Save " },
   comment: {
     type: Schema.Types.ObjectId,
     ref: "Comment"

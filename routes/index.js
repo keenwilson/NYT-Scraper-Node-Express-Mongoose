@@ -44,7 +44,7 @@ router.get("/save-article/:id", function(req, res) {
         // id
         req.params.id,
         // update
-        { isSaved: false },
+        { isSaved: false, buttonStatus: "Save" },
         // options:  set 'new' to 'true' to return the modified document rather than the original
         { new: true },
         // callback
@@ -59,7 +59,7 @@ router.get("/save-article/:id", function(req, res) {
         // id
         req.params.id,
         // update
-        { isSaved: true },
+        { isSaved: true, buttonStatus: "Remove" },
         // option
         { new: true },
         // callback

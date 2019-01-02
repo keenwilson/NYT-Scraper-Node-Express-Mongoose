@@ -40,6 +40,10 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.btn-sm.round {
+  border-radius: 16px;
+}
 a {
-  color: #333;
+  color: #343a40;
 }

@@ -20,11 +20,10 @@
           <p class="card-text">{{this.description}}</p>
 
           <button type="button" class="view-comments btn btn-link"><i class="far fa-comments"></i> View Comments</button>
-          <a href="/save-article/{{this._id}}" class="btn btn-success">Save <i class="far fa-bookmark"></i></a>
+          <a href="/save-article/{{this._id}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
+            {{this.buttonStatus}}
+          </a>
         </div>
       </div>
-    </div>
-    {{/each}}
-  </div>
-  {{/each}}
-</div> {{!-- End Content Bar --}}
+    </div> {{/each}} </div>
+  {{/each}} </div> {{!-- End Content Bar --}}
