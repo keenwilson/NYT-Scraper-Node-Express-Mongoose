@@ -5,6 +5,9 @@ body {
   color: #333;
 }
 
+a.newspaper-headline {
+  text-decoration: none;
+}
 .newspaper-font {
   font-family: "Alfa Slab One", cursive;
 }
@@ -46,4 +49,27 @@ body {
 }
 a {
   color: #343a40;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+.ratio {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+  width: 100%;
+}
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.div-205 {
+  width: 205px;
 }

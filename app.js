@@ -11,9 +11,15 @@ var indexRouter = require("./routes/index");
 var app = express();
 
 // Connect to the Mongo DB
+const OPTS = {
+  family: 4,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+};
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/nytbusinessscraper",
-  { useNewUrlParser: true }
+  OPTS
 );
 
 // view engine setup

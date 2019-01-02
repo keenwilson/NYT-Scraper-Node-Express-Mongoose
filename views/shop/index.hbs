@@ -1,10 +1,21 @@
-<h1 class="newspaper-font">Business</h1>
+<a class="newspaper-headline" href="/">
+  <h1 class="newspaper-font text-center">The New York Times</h1>
+</a>
 <div class="d-flex intro-bar">
   <p class="p-2 flex-grow-1">Welcome to {{title}} <span id="datetime"></span></p>
   <div class="p-2">
 
-    <button id="scrape-articles" type="button" class="btn btn-outline-dark"><i class="fas fa-glasses"></i> Scrape New
-      Articles</button>
+
+    <a href="/business" class="btn btn-outline-info">
+      <i class="far fa-building"></i> Scrape Business Section
+    </a>
+    <a href="/tech" class="btn btn-outline-info">
+      <i class="fas fa-laptop"></i> Scrape Technology Section
+    </a>
+    <a href="/entrepreneuship" class="btn btn-outline-info">
+      <i class="fas fa-shopping-basket"></i> Scrape Entrepreneuship Section
+    </a>
+
   </div>
 </div>
 <div class="content-bar">
@@ -13,10 +24,10 @@
     {{# each this}}
     <div class="col-sm-6 col-md-4">
       <div class="card mx-auto mb-3" style="width: 18.5rem;">
-        <img class="card-img-top img-fluid" src="{{this.imagePath}}" alt="Card image cap">
+        <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"></h5>
-          <a href="{{this.link}}" class="card-title">{{this.title}}</a>
+          <a href="{{this.link}}" target="_blank" class="card-title">{{this.title}}</a>
           <p class="card-text">{{this.description}}</p>
 
           <button type="button" class="view-comments btn btn-link"><i class="far fa-comments"></i> View Comments</button>
