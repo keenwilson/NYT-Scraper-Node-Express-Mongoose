@@ -1,0 +1,36 @@
+<a class="newspaper-headline" href="/">
+  <h1 class="newspaper-font text-center">The New York Times</h1>
+</a>
+<div class="d-flex intro-bar">
+  <div class="p-2 flex-grow-1">
+    <h5 class="newspaper-font text-capitalize">{{title}}</h5>
+    <p class="card-text intro-text">There are {{qty}} articles saved in the database.</p>
+  </div>
+
+  <div class="p-2">
+    <a href="/" class="btn btn-sm btn-outline-dark">
+      <i class="fas fa-home"></i> Back to Home
+    </a>
+  </div>
+</div>
+<div class="content-bar">
+  {{# each articles }}
+  <div class="row">
+    {{# each this}}
+    <div class="col-sm-6 col-md-4">
+      <div class="card mx-auto mb-3" style="width: 18.5rem;">
+        <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title news-title"></h5>
+          <a href="{{this.link}}" target="_blank" class="card-title">{{this.title}}</a>
+          <p class="card-text mt-2">{{this.description}}</p>
+          <a href="/articles/{{this._id}}" class="view-comments btn btn-link"><i class=" far fa-comments"></i> View
+            Comments
+          </a>
+          <a href="/save-article/{{this._id}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
+            {{this.buttonStatus}}
+          </a>
+        </div>
+      </div>
+    </div> {{/each}} </div>
+  {{/each}} </div> {{!-- End Content Bar --}}

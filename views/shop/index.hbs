@@ -2,19 +2,36 @@
   <h1 class="newspaper-font text-center">The New York Times</h1>
 </a>
 <div class="d-flex intro-bar">
-  <p class="p-2 flex-grow-1">Welcome to {{title}} <span id="datetime"></span></p>
+  <div class="p-2 flex-grow-1">
+    <p>Welcome to {{title}} <span id="datetime"></span></p>
+    <p><i class="fas fa-cut"></i> Scraper Tools:</p>
+
+    <a href="/scrape/business" class="btn btn-sm btn-outline-info">
+      <i class="fas fa-shopping-basket"></i> Business Section
+    </a>
+    <a href="/scrape/tech" class="btn btn-sm btn-outline-info">
+      <i class="fas fa-user-astronaut"></i> Technology Section
+    </a>
+    <a href="/scrape/food" class="btn btn-sm btn-outline-info">
+      <i class="fas fa-carrot"></i> Food Section
+    </a>
+    <a href="/scrape/travel" class="btn btn-sm btn-outline-info">
+      <i class="fas fa-globe-asia"></i> Travel Section
+    </a>
+    <a href="/scrape/style" class="btn btn-sm btn-outline-info">
+      <i class="fas fa-glass-martini-alt"></i> Style Section
+    </a>
+
+  </div>
   <div class="p-2">
+    <p><i class="fas fa-database"></i> Database:</p>
+    <p>Currently there are {{qty}} articles scraped form the NY Times and displayed.</p>
+    <a href="/saved"><button id="del-btn" class="btn btn-sm round btn-outline-info">View Saved Articles</button></a>
 
 
-    <a href="/business" class="btn btn-outline-info">
-      <i class="far fa-building"></i> Scrape Business Section
-    </a>
-    <a href="/tech" class="btn btn-outline-info">
-      <i class="fas fa-laptop"></i> Scrape Technology Section
-    </a>
-    <a href="/entrepreneuship" class="btn btn-outline-info">
-      <i class="fas fa-shopping-basket"></i> Scrape Entrepreneuship Section
-    </a>
+    <a href="/delete"><button id="del-btn" class="btn btn-sm round btn-outline-danger">Delete Unsaved Articles</button></a>
+
+
 
   </div>
 </div>

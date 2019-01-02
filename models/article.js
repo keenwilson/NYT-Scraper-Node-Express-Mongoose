@@ -9,7 +9,7 @@ var schema = new Schema({
   link: { type: String, required: true },
   isSaved: { type: Boolean, default: false },
   buttonStatus: { type: String, default: " Save " },
-  date: { type: Date, default: Date.now },
+  scrapedAt: { type: Date, default: Date.now },
   section: { type: String },
   // `comments` is an object that stores a Comment id
   // The ref property links the ObjectId to the Comment model

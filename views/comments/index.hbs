@@ -1,0 +1,31 @@
+<a class="newspaper-headline" href="/">
+  <h1 class="newspaper-font text-center">The New York Times</h1>
+</a>
+<div class="d-flex intro-bar">
+  <div class="p-2 flex-grow-1">
+    <h5 class="newspaper-font text-capitalize">{{section}}</h5>
+    <p class="card-text intro-text">You are reading <span class="content-title">{{title}}</span> </p>
+  </div>
+
+  <div class="p-2">
+    <a href="/" class="btn btn-sm btn-outline-dark">
+      <i class="fas fa-home"></i> Back to Home
+    </a>
+  </div>
+</div>
+<div class="content-bar">
+  {{# each comments }}
+
+  <div class="comment-display">
+    <div class="card border-info mb-3" style="max-width: 80%;">
+      <div class="card-body text-info">
+        <h5 class="card-title">{{this.commentBody}}</h5>
+        <p class="card-text">- {{this.username}}</p>
+
+      </div>
+
+    </div>
+  </div>
+  {{/each}}
+
+</div> {{!-- End Content Bar --}}

@@ -12,8 +12,9 @@ var cheerio = require("cheerio");
 /* GET home page. */
 router.get("/", function(req, res, next) {
   Article.find({})
-    .sort("-date")
+    .sort([["scrapedAt", -1]])
     .exec(function(err, docs) {
+      var totalArticles = docs.length;
       var articleChunks = [];
       var chunkSize = 3;
       for (var i = 0; i < docs.length; i += chunkSize) {
@@ -22,33 +23,42 @@ router.get("/", function(req, res, next) {
 
       res.render("shop/index", {
         title: "NYT Article Scraper",
-        articles: articleChunks
+        articles: articleChunks,
+        qty: totalArticles
       });
     });
 });
 
 router.get("/saved", function(req, res, next) {
   Article.find({ isSaved: true })
-    .sort("-date")
+    .sort([["scrapedAt", -1]])
     .exec(function(err, docs) {
+      var totalSavedArticles = docs.length;
       var articleChunks = [];
       var chunkSize = 3;
       for (var i = 0; i < docs.length; i += chunkSize) {
         articleChunks.push(docs.slice(i, i + chunkSize));
       }
 
-      res.render("shop/index", {
-        title: "NYT Article Scraper",
-        articles: articleChunks
+      res.render("saved/index", {
+        title: "Saved",
+        articles: articleChunks,
+        qty: totalSavedArticles
       });
     });
+});
+
+// Clean up databased by removing unsaved articles
+router.get("/delete", function(req, res, next) {
+  Article.deleteMany({ isSaved: false }, function(err, data) {
+    if (err) return handleError(err);
+    res.redirect("/");
+  });
 });
 
 router.get("/save-article/:id", function(req, res) {
   var articleId = req.params.id;
   Article.findById(articleId, function(err, article) {
-    console.log("Working with this article", article);
-    console.log("Is this article saved?", article.isSaved);
     if (article.isSaved) {
       Article.findByIdAndUpdate(
         // id
@@ -59,8 +69,6 @@ router.get("/save-article/:id", function(req, res) {
         { new: true },
         // callback
         function(err, data) {
-          console.log("-------------------------");
-          console.log("This article is already saved", data);
           res.redirect("/");
         }
       );
@@ -74,8 +82,6 @@ router.get("/save-article/:id", function(req, res) {
         { new: true },
         // callback
         function(err, data) {
-          console.log("-------------------------");
-          console.log("Add articles to saved folder", data);
           res.redirect("/saved");
         }
       );
@@ -83,168 +89,81 @@ router.get("/save-article/:id", function(req, res) {
   });
 });
 
-router.get("/tech", function(req, res) {
-  axios
-    .get("https://www.nytimes.com/section/technology")
-    .then(function(response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-      var result = {};
-      $("div.css-4jyr1y").each(function(i, element) {
-        var link = $(element)
-          .find("a")
-          .attr("href");
-        var title = $(element)
-          .find("h2.e1xfvim30")
-          .text()
-          .trim();
-        var description = $(element)
-          .find("p.e1xfvim31")
-          .text()
-          .trim();
-        var imagePath = $(element)
-          .parent()
-          .find("figure.css-196wev6")
-          .find("img")
-          .attr("src");
-        var baseURL = "https://www.nytimes.com";
-        result.link = baseURL + link;
-        result.title = title;
-        if (description) {
-          result.description = description;
-        }
-        if (imagePath) {
-          result.imagePath = imagePath;
-        } else {
-          result.imagePath =
-            "https://via.placeholder.com/205x137.png?text=No%20Image%20from%20NYTimes";
-        }
-        result.section = "technology";
+router.get("/scrape/:section", function(req, res) {
+  var section = req.params.section;
+  var sectionUrl = "";
+  console.log("-----------------");
+  console.log(section, req.params.section);
 
-        // Create a new Article using the `result` object built from scraping
-        Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log("---------------------------");
-            console.log("View the added result in the console", dbArticle);
-          })
-          .catch(function(err) {
-            // If an error occurred, log it
-            console.log(err);
-          });
-      });
-      console.log("Scrape Complete");
-      res.redirect("/");
+  switch (section) {
+    case "business":
+      sectionUrl = "https://www.nytimes.com/section/business/";
+      break;
+    case "food":
+      sectionUrl = "https://www.nytimes.com/section/food";
+      break;
+    case "tech":
+      sectionUrl = "https://www.nytimes.com/section/technology";
+      break;
+    case "travel":
+      sectionUrl = "https://www.nytimes.com/section/travel";
+      break;
+    case "style":
+      sectionUrl = " https://www.nytimes.com/section/style";
+      break;
+    default:
+    // code block
+  }
+  axios.get(sectionUrl).then(function(response) {
+    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    var $ = cheerio.load(response.data);
+    var result = {};
+    $("div.css-4jyr1y").each(function(i, element) {
+      var link = $(element)
+        .find("a")
+        .attr("href");
+      var title = $(element)
+        .find("h2.e1xfvim30")
+        .text()
+        .trim();
+      var description = $(element)
+        .find("p.e1xfvim31")
+        .text()
+        .trim();
+      var imagePath = $(element)
+        .parent()
+        .find("figure.css-196wev6")
+        .find("img")
+        .attr("src");
+      var baseURL = "https://www.nytimes.com";
+      result.link = baseURL + link;
+      result.title = title;
+      if (description) {
+        result.description = description;
+      }
+      if (imagePath) {
+        result.imagePath = imagePath;
+      } else {
+        result.imagePath =
+          "https://via.placeholder.com/205x137.png?text=No%20Image%20from%20NYTimes";
+      }
+      result.section = section;
+
+      // Create a new Article using the `result` object built from scraping
+      Article.create(result)
+        .then(function(dbArticle) {
+          // View the added result in the console
+          console.log("---------------------------");
+          console.log("View the added result in the console", dbArticle);
+        })
+        .catch(function(err) {
+          // If an error occurred, log it
+          console.log(err);
+        });
     });
-});
-
-router.get("/business", function(req, res) {
-  axios
-    .get("https://www.nytimes.com/section/business")
-    .then(function(response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-      var result = {};
-      $("div.css-4jyr1y").each(function(i, element) {
-        var link = $(element)
-          .find("a")
-          .attr("href");
-        var title = $(element)
-          .find("h2.e1xfvim30")
-          .text()
-          .trim();
-        var description = $(element)
-          .find("p.e1xfvim31")
-          .text()
-          .trim();
-        var imagePath = $(element)
-          .parent()
-          .find("figure.css-196wev6")
-          .find("img")
-          .attr("src");
-        var baseURL = "https://www.nytimes.com";
-        result.link = baseURL + link;
-        result.title = title;
-        if (description) {
-          result.description = description;
-        }
-        if (imagePath) {
-          result.imagePath = imagePath;
-        } else {
-          result.imagePath =
-            "https://via.placeholder.com/205x137.png?text=No%20Image%20from%20NYTimes";
-        }
-        result.section = "business";
-        // Create a new Article using the `result` object built from scraping
-        Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log("---------------------------");
-            console.log("View the added result in the console", dbArticle);
-          })
-          .catch(function(err) {
-            // If an error occurred, log it
-            console.log(err);
-          });
-      });
-      console.log("Scrape Complete");
-      res.redirect("/");
-    });
-});
-
-router.get("/entrepreneuship", function(req, res) {
-  axios
-    .get("https://www.nytimes.com/section/business/smallbusiness")
-    .then(function(response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-      var result = {};
-      $("div.css-4jyr1y").each(function(i, element) {
-        var link = $(element)
-          .find("a")
-          .attr("href");
-        var title = $(element)
-          .find("h2.e1xfvim30")
-          .text()
-          .trim();
-        var description = $(element)
-          .find("p.e1xfvim31")
-          .text()
-          .trim();
-        var imagePath = $(element)
-          .parent()
-          .find("figure.css-196wev6")
-          .find("img")
-          .attr("src");
-        var baseURL = "https://www.nytimes.com";
-        result.link = baseURL + link;
-        result.title = title;
-        if (description) {
-          result.description = description;
-        }
-        if (imagePath) {
-          result.imagePath = imagePath;
-        } else {
-          result.imagePath =
-            "https://via.placeholder.com/205x137.png?text=No%20Image%20from%20NYTimes";
-        }
-        result.section = "entrepreneuship";
-
-        // Create a new Article using the `result` object built from scraping
-        Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-            console.log("---------------------------");
-            console.log("View the added result in the console", dbArticle);
-          })
-          .catch(function(err) {
-            // If an error occurred, log it
-            console.log(err);
-          });
-      });
-      console.log("Scrape Complete");
-      res.redirect("/");
-    });
+    console.log("Scrape Complete");
+    res.redirect("/");
+  });
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
@@ -297,6 +216,7 @@ router.get("/articles/:id", function(req, res) {
 
 // Route for saving/updating an Article's associated Comment
 router.post("/articles/:id", function(req, res) {
+  var redirectBackToArticle = `/articles/${req.params.id}`;
   console.log("Submit comment is clicked", req.params);
 
   // Grab the request body
@@ -324,24 +244,10 @@ router.post("/articles/:id", function(req, res) {
     .then(function(dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
       console.log("Successfully update an Article", dbArticle);
-      res.json(dbArticle);
+      res.redirect(redirectBackToArticle);
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
-      res.json(err);
-    });
-});
-
-// Route for retrieving all Notes from the db
-router.get("/comments", function(req, res) {
-  // Find all Comments
-  Comment.find({})
-    .then(function(dbComment) {
-      // If all Notes are successfully found, send them back to the client
-      res.json(dbComment);
-    })
-    .catch(function(err) {
-      // If an error occurs, send the error back to the client
       res.json(err);
     });
 });
