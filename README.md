@@ -18,7 +18,8 @@ A working version of the application can be found at [https://fast-caverns-15278
 
 ## What This Application Does
 
-- Whenever a user visits the site, the user can use a scraping tool to scrape stories from a news outlet, which is **The New York TImes** in this app. The user can select which section of NYT that they want to review: `Business`, `technology`, `food`, `travel`, and `style`.
+- Whenever a user visits the site, the user can use a scraping tool to scrape stories from a news outlet, which is **The New York TImes** in this app. The user can select which section of NYT that they want to review: `U.S.`, `Business`, `Technology`, `Travel`, and `Style`.
+
 - Each scraped article will be saved to the application database.
 - The app should scrape and display the following information for each article:
   - Headline - the title of the article

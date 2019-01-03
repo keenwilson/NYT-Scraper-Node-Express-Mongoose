@@ -100,9 +100,6 @@ router.get("/scrape/:section", function(req, res) {
     case "business":
       sectionUrl = "https://www.nytimes.com/section/business";
       break;
-    case "food":
-      sectionUrl = "https://www.nytimes.com/section/food";
-      break;
     case "tech":
       sectionUrl = "https://www.nytimes.com/section/technology";
       break;
