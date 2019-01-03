@@ -15,13 +15,14 @@
 </div>
 <div class="content-bar">
   <div class="row">
-    <div class="col-sm-12 col-md-4">
-      <div class="card mx-auto mb-3" style="width: 18.5rem;">
+    <div class="col-12 col-md-4">
+      <div class="card mx-auto mb-3" style="width: 90%;">
         <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
         <div class="card-body">
           <a href="{{this.link}}" target="_blank" class="card-title news-title">{{this.title}}</a>
           <p class="card-text mt-2">{{this.description}}</p>
-          <a href="{{this.link}}" target="_blank" class="view-comments btn btn-link">Read full article
+          <a href="{{this.link}}" target="_blank" class="view-comments btn btn-link"><i class="far fa-newspaper"></i>
+            Read full article
           </a>
           <a href="/save-article/{{this.articleId}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
             {{this.buttonStatus}}
@@ -29,15 +30,15 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-12 col-md-8">
+    <div class="col-12 col-md-8">
       {{!-- Add Comment Form --}}
-      <div id="view-response">
+      <div id="view-response" class="d-flex justify-content-center">
         <div id="comment-display">
           <p>Responses for <span id="article-title" class="content-title">{{this.title}}</span></p>
           {{# each comments }}
 
           <div class="comment-display">
-            <div class="card border-info mb-3" style="max-width: 80%;">
+            <div class="card border-info mb-3" style="width: 90%;">
               <div class="card-body text-info">
                 <h5 class="card-title">{{this.commentBody}}</h5>
                 <p class="card-text">- {{this.username}}</p>
@@ -55,7 +56,7 @@
           </div>
           {{/each}}
           <p><i class="fas fa-user-edit"></i> Comment </p>
-          <form action="/articles/{{this.articleId}}" method="post" style="max-width: 80%;">
+          <form action="/articles/{{this.articleId}}" method="post" style="width: 90%;">
             <div id="save-comment" class="justify-content-center">
               <div class="form-group">
                 <textarea class="form-control mb-2" name="new_comment_body" id="new-comment-body" rows="3" placeholder="Tell us what you think about this article..."></textarea>
@@ -64,7 +65,7 @@
                 <input type="text" class="form-control mb-2" name="new_comment_username" id="new-comment-username"
                   placeholder="Your public name">
               </div>
-              <button type="submit" class="btn btn-light">Send</button>
+              <button type="submit" class="btn btn-info btn-sm round">Send</button>
             </div>
           </form>
         </div>

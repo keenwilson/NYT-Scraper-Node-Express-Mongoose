@@ -17,12 +17,11 @@
   {{# each articles }}
   <div class="row">
     {{# each this}}
-    <div class="col-sm-6 col-md-4">
-      <div class="card mx-auto mb-3" style="width: 18.5rem;">
+    <div class="col-12 col-md-4">
+      <div class="card mx-auto mb-3" style="width: 90%;">
         <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title news-title"></h5>
-          <a href="{{this.link}}" target="_blank" class="card-title">{{this.title}}</a>
+          <a href="{{this.link}}" target="_blank" class="card-title news-title">{{this.title}}</a>
           <p class="card-text mt-2">{{this.description}}</p>
           <a href="/articles/{{this._id}}" class="view-comments btn btn-link"><i class=" far fa-comments"></i> View
             Comments

@@ -41,18 +41,32 @@
   {{# each articles }}
   <div class="row">
     {{# each this}}
-    <div class="col-sm-6 col-md-4">
-      <div class="card mx-auto mb-3" style="width: 18.5rem;">
-        <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
+    <div class="col-12 col-md-4">
+      <div class="card mx-auto mb-3 text-center" style="width: 90%;">
+        <a href="/articles/{{this._id}}">
+          <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap"></a>
         <div class="card-body">
-          <a href="{{this.link}}" target="_blank" class="card-title news-title">{{this.title}}</a>
-          <p class="card-text mt-2">{{this.description}}</p>
-          <a href="/articles/{{this._id}}" class="view-comments btn btn-link"><i class=" far fa-comments"></i> View
-            Comments
-          </a>
-          <a href="/save-article/{{this._id}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
-            {{this.buttonStatus}}
-          </a>
+          <p><a href="/articles/{{this._id}}" target=" _blank" class="card-title news-title">{{this.title}}</a></p>
+          <p class="card-text text-left">{{this.description}} <a href="{{this.link}}" target="_blank"><span class="text-info">Read
+                more...</span></a></p>
+        </div>
+        <div class="row">
+
+          <div class="col-6">
+            <p class="text-center"><a href="/articles/{{this._id}}" class="view-comments btn btn-link"><i class=" far fa-comments"></i>
+                Comments
+              </a></p>
+          </div>
+          <div class="col-6">
+            <p class="text-center">
+              <a href="/save-article/{{this._id}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
+                {{this.buttonStatus}}
+              </a></p>
+          </div>
+
+
+
+
         </div>
       </div>
     </div> {{/each}} </div>
