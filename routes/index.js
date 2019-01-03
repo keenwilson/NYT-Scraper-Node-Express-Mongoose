@@ -94,9 +94,6 @@ router.get("/scrape/:section", function(req, res) {
   var sectionUrl = "";
 
   switch (section) {
-    case "world":
-      sectionUrl = "https://www.nytimes.com/section/world";
-      break;
     case "us":
       sectionUrl = "https://www.nytimes.com/section/us";
       break;
@@ -151,7 +148,12 @@ router.get("/scrape/:section", function(req, res) {
         result.imagePath =
           "https://via.placeholder.com/205x137.png?text=No%20Image%20from%20NYTimes";
       }
-      result.section = section;
+
+      if (section !== "us") {
+        result.section = section;
+      } else {
+        result.section = "U.S.";
+      }
 
       // Create a new Article using the `result` object built from scraping
       Article.create(result)

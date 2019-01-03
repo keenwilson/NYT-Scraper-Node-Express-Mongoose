@@ -6,9 +6,6 @@
     <p>Welcome to {{title}} <span id="datetime"></span></p>
     <p><i class="fas fa-cut"></i> Scraper Tools:</p>
 
-    <a href="/scrape/world" class="btn btn-sm btn-outline-info mr-2 mb-2">
-      <i class="fas fa-globe-americas"></i> World Section
-    </a>
     <a href="/scrape/us" class="btn btn-sm btn-outline-info mr-2 mb-2">
       <i class="fas fa-flag-usa"></i> U.S. Section
     </a>
@@ -32,7 +29,7 @@
   <div class="p-2">
     <p><i class="fas fa-database"></i> Database:</p>
     <p>Currently there are {{qty}} articles scraped form the NY Times and displayed.</p>
-    <a href="/saved"><button id="del-btn" class="btn btn-sm round btn-outline-success"><i class="far fa-newspaper"></i>
+    <a href="/saved"><button id="del-btn" class="btn btn-sm round btn-outline-success mb-2 mr-2"><i class="far fa-newspaper"></i>
         View Saved Articles</button></a>
 
 
@@ -51,8 +48,7 @@
       <div class="card mx-auto mb-3" style="width: 18.5rem;">
         <img class="card-img-top img-fluid div-205 mx-auto mt-2" src="{{this.imagePath}}" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title news-title"></h5>
-          <a href="{{this.link}}" target="_blank" class="card-title">{{this.title}}</a>
+          <a href="{{this.link}}" target="_blank" class="card-title news-title">{{this.title}}</a>
           <p class="card-text mt-2">{{this.description}}</p>
           <a href="/articles/{{this._id}}" class="view-comments btn btn-link"><i class=" far fa-comments"></i> View
             Comments
