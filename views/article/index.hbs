@@ -41,6 +41,13 @@
               <div class="card-body text-info">
                 <h5 class="card-title">{{this.commentBody}}</h5>
                 <p class="card-text">- {{this.username}}</p>
+                {{#this._id}}
+                <div class="text-right">
+                  <a href="/deletecomment/{{this._id}}" class="btn btn-sm round btn-light delete-comment"><i class="far fa-trash-alt"></i>
+                    Delete
+                  </a>
+                </div>
+                {{/this._id}}
 
               </div>
 

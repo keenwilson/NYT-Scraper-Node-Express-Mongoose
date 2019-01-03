@@ -92,8 +92,6 @@ router.get("/save-article/:id", function(req, res) {
 router.get("/scrape/:section", function(req, res) {
   var section = req.params.section;
   var sectionUrl = "";
-  console.log("-----------------");
-  console.log(section, req.params.section);
 
   switch (section) {
     case "world":
@@ -179,12 +177,6 @@ router.get("/articles/:id", function(req, res) {
     // ..and populate all of the comments associated with it
     .populate("comments")
     .then(function(dbArticle) {
-      // If we were able to successfully find an Article with the given id, send it back to the client
-      console.log(
-        "Successfully find and associate an Article with the given id",
-        dbArticle
-      );
-
       // If there are comments in the article
       var commentsToDisplay = [];
 
@@ -198,10 +190,7 @@ router.get("/articles/:id", function(req, res) {
       } else {
         commentsToDisplay = dbArticle.comments;
       }
-      console.log(
-        "-------------------------------------commentsToDisplay",
-        commentsToDisplay
-      );
+
       res.render("article/index", {
         articleId: dbArticle._id,
         imagePath: dbArticle.imagePath,
@@ -223,21 +212,20 @@ router.get("/articles/:id", function(req, res) {
 // Route for saving/updating an Article's associated Comment
 router.post("/articles/:id", function(req, res) {
   var redirectBackToArticle = `/articles/${req.params.id}`;
-  console.log("Submit comment is clicked", req.params);
+  var articleId = req.params.id;
 
   // Grab the request body
   var body = req.body;
   // Each property on the body all represent our text boxes in article/index.hbs as specified by the name attribute on each of those input fields
   var res_body = {
     commentBody: body.new_comment_body,
-    username: body.new_comment_username
+    username: body.new_comment_username,
+    articleId: articleId
   };
 
   // Create a new note and pass the req.body to the entry
   Comment.create(res_body)
     .then(function(dbComment) {
-      console.log("---------------------------");
-      console.log("find one Article with an `_id` equal to ", req.params.id);
       // If a Comment was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
       // { new: true } tells the query that we want it to return the updated Article -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
@@ -249,13 +237,31 @@ router.post("/articles/:id", function(req, res) {
     })
     .then(function(dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
-      console.log("Successfully update an Article", dbArticle);
       res.redirect(redirectBackToArticle);
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
       res.json(err);
     });
+});
+
+// Clean up databased by removing unsaved articles
+router.get("/deletecomment/:id", function(req, res, next) {
+  var articleId = "";
+
+  // Grab article Id from the database
+  Comment.findById({ _id: req.params.id }).exec(function(err, doc) {
+    console.log(doc);
+    articleId = doc.articleId;
+
+    var redirectBackToArticle = `/articles/${articleId}`;
+    console.log(redirectBackToArticle);
+
+    Comment.deleteOne({ _id: req.params.id }, function(err, data) {
+      if (err) return handleError(err);
+      res.redirect(redirectBackToArticle);
+    });
+  });
 });
 
 module.exports = router;

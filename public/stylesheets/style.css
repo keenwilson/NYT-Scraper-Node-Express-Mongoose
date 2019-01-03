@@ -5,7 +5,8 @@ body {
   color: #333;
 }
 
-a.newspaper-headline {
+a.newspaper-headline,
+a.delete-comment {
   text-decoration: none;
 }
 .newspaper-font {
