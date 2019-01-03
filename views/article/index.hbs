@@ -23,7 +23,7 @@
           <p class="card-text mt-2">{{this.description}}</p>
           <a href="{{this.link}}" target="_blank" class="view-comments btn btn-link">Read full article
           </a>
-          <a href="/save-article/{{this._id}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
+          <a href="/save-article/{{this.articleId}}" class="btn btn-sm round btn{{#this.isSaved}}-outline{{/this.isSaved}}-dark">
             {{this.buttonStatus}}
           </a>
         </div>
