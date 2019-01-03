@@ -51,14 +51,12 @@
           <form action="/articles/{{this.articleId}}" method="post" style="max-width: 80%;">
             <div id="save-comment" class="justify-content-center">
               <div class="form-group">
+                <textarea class="form-control mb-2" name="new_comment_body" id="new-comment-body" rows="3" placeholder="Tell us what you think about this article..."></textarea>
+              </div>
+              <div class="form-group">
                 <input type="text" class="form-control mb-2" name="new_comment_username" id="new-comment-username"
                   placeholder="Your public name">
               </div>
-
-              <div class="form-group">
-                <textarea class="form-control mb-2" name="new_comment_body" id="new-comment-body" rows="3" placeholder="Tell us what you think about this article..."></textarea>
-              </div>
-
               <button type="submit" class="btn btn-light">Send</button>
             </div>
           </form>

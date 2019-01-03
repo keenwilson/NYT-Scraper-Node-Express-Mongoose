@@ -54,10 +54,12 @@ A working version of the application can be found at [https://fast-caverns-15278
 
    - This code should connect mongoose to your remote mongolab database if deployed, but otherwise will connect to the local mongoHeadlines database on your computer.
 
-3) Navigate to heroku.com and login with your credentials
+5. Navigate to heroku.com and login with your credentials
 
-4) Find your Heroku app’s name in the dashboard. Click on it. You'll know that Heroku set up your database when a mLab MondoDB entry shows up in the Add-ons section.
+6. Find your Heroku app’s name in the dashboard. Click on it. You'll know that Heroku set up your database when a mLab MondoDB entry shows up in the Add-ons section.
    ![Free mLab is added to your project](./screenshots/screenshots-mLabonHeroku.png)
+
+7. To deploy your app to Heroku, you typically use the git push command to push the code from your local repository’s master branch to your heroku remote, like so: `git push heroku master`
 
 ---
 
