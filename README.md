@@ -1,6 +1,6 @@
 # NYT-Scraper-Node-Express-Mongoose
 
-A web app utilizes `mongoDB`, `Mongoose`, `cheerio`, and `express` to let the user scrape articles from a website.
+A web app utilizes `mongoDB`, `Mongoose`, `cheerio`, and `express` to let the user view and leave comments on the latest news.
 
 ---
 
@@ -18,17 +18,22 @@ A working version of the application can be found at [https://fast-caverns-15278
 
 ## What This Application Does
 
-- Whenever a user visits the site, the user can use a scraping tool to scrape stories from a news outlet, which is **The New York TImes** in this app. The user can select which section of NYT that they want to review: `U.S.`, `Business`, `Technology`, `Travel`, and `Style`.
-
-- Each scraped article will be saved to the application database.
-- The app should scrape and display the following information for each article:
+![Run Heroku Create](./screenshots/screenshots-home.png)
+* Whenever a user visits the site, the user can use a scraping tool to scrape stories from a news outlet, which is **The New York TImes** in this app. The user can select which section of NYT that they want to review: `U.S.`, `Business`, `Technology`, `Travel`, and `Style`.
+   
+* Each scraped article will be saved to the application database. The app should scrape and display the following information for each article:
   - Headline - the title of the article
   - Summary - a short summary of the article
   - URL - the url to the original article
   - imagePath - the image url of the original article
 
-* Users are able to leave comments on the articles displayed and revisit them later. The comments will be saved to the database as well and associated with their articles. Users will also be able to delete comments left on articles. All stored comments will be visible to every user.
 
+![Run Heroku Create](./screenshots/screenshots-saved.png)
+* Users can save articles that they are interested. The saved articles will not be removed when any user clear the database.
+
+![Run Heroku Create](./screenshots/screenshots-comment.png)
+* Users are able to leave comments on the articles displayed and revisit them later. The comments will be saved to the database as well and associated with their articles. Users will also be able to delete comments left on articles. All stored comments will be visible to every user.
+ 
 ---
 
 ## Deploy Your Project To Heroku
