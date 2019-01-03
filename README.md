@@ -1,8 +1,14 @@
 # NYT-Scraper-Node-Express-Mongoose
 
-A web app utilizes mongoDB, Mongoose, cheerio, and express to let the user scrape articles from a website.
+A web app utilizes `mongoDB`, `Mongoose`, `cheerio`, and `express` to let the user scrape articles from a website.
 
-### Dependencies
+---
+
+A working version of the application can be found at [https://fast-caverns-15278.herokuapp.com/](https://fast-caverns-15278.herokuapp.com/ "NYT-Scraper-Node-Express-Mongoose")
+
+---
+
+## Dependencies
 
 - `express`
 - `express-handlebars`
@@ -10,7 +16,7 @@ A web app utilizes mongoDB, Mongoose, cheerio, and express to let the user scrap
 - `cheerio`
 - `axios`
 
-### What This Application Does
+## What This Application Does
 
 - Whenever a user visits the site, the user can use a scraping tool to scrape stories from a news outlet, which is **The New York TImes** in this app. The user can select which section of NYT that they want to review: `Business`, `technology`, `food`, `travel`, and `style`.
 - Each scraped article will be saved to the application database.
@@ -22,7 +28,9 @@ A web app utilizes mongoDB, Mongoose, cheerio, and express to let the user scrap
 
 * Users are able to leave comments on the articles displayed and revisit them later. The comments will be saved to the database as well and associated with their articles. Users will also be able to delete comments left on articles. All stored comments will be visible to every user.
 
-### Deploy Your Project To Heroku
+---
+
+## Deploy Your Project To Heroku
 
 1. On your local machine, navigate to your project folder. As this point, we’ll assume you’ve been pushing/pulling your code with Github but have yet to deploy it to Heroku
 2. Run `heroku create` to connect your repo with Heroku
@@ -48,10 +56,50 @@ A web app utilizes mongoDB, Mongoose, cheerio, and express to let the user scrap
 
 3) Navigate to heroku.com and login with your credentials
 
-4) Find your Heroku app’s name in the dashboard. Click on it.
+4) Find your Heroku app’s name in the dashboard. Click on it. You'll know that Heroku set up your database when a mLab MondoDB entry shows up in the Add-ons section.
    ![Free mLab is added to your project](./screenshots/screenshots-mLabonHeroku.png)
 
-### Helpful Links
+---
+
+## Express Generator
+
+Use the application generator tool, [express-generator](https://expressjs.com/en/starter/generator.html), to quickly create an application skeleton.
+
+- The express-generator package installs the express command-line tool. Use the following command to do so: `npm install express-generator -g`
+
+- For example, the following creates an Express app named myapp. The app will be created in a folder named myapp in the current working directory and the view engine will be set to `handlebars`: `express --view=hbs myapp`
+
+- Or you can use `express-generator` insdie a current working directory: `express --view=hbs`. Then install dependencies: `npm install`
+
+* Then load http://localhost:3000/ in your browser to access the app.
+
+* The generated app has the following directory structure:
+
+```
+.
+├── app.js
+├── bin
+│   └── www
+├── package.json
+├── public
+│   ├── images
+│   ├── javascripts
+│   └── stylesheets
+│       └── style.css
+├── routes
+│   ├── index.js
+│   └── users.js
+└── views
+    ├── error.hbs
+    ├── index.hbs
+    └── layout.hbs
+
+7 directories, 9 files
+```
+
+---
+
+## Helpful Links
 
 - [MongoDB Documentation](https://docs.mongodb.com/manual/)
 - [Mongoose Documentation](http://mongoosejs.com/docs/api.html)
